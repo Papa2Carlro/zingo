@@ -1,0 +1,58 @@
+{
+  "name": "zingo-formatter",
+  "version": "1.0.0",
+  "description": "Zingo chat formatter - Russian words with Ukrainian alphabet for fun",
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./react": {
+      "import": "./dist/react.js",
+      "types": "./dist/react.d.ts"
+    },
+    "./browser": {
+      "import": "./dist/browser.es.js",
+      "require": "./dist/browser.umd.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "bin": {
+    "zingo-fmt": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "build:browser": "vite build",
+    "dev": "tsx src/cli.ts",
+    "test": "tsx src/test.ts",
+    "prepublishOnly": "npm run build && npm run build:browser"
+  },
+  "keywords": [
+    "zingo",
+    "formatter",
+    "chat",
+    "surzhyk",
+    "translit",
+    "ukrainian",
+    "russian"
+  ],
+  "author": "Zingo Team",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.2.18",
+    "tsx": "^4.19.0",
+    "typescript": "^5.5.0",
+    "vite": "^6.4.3"
+  },
+  "files": [
+    "dist"
+  ],
+  "peerDependencies": {
+    "react": ">=18.0.0"
+  }
+}

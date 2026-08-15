@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Zingo Formatter - Website Example</title>
+  <style>
+    body { font-family: sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; }
+    .controls { margin: 20px 0; }
+    textarea { width: 100%; height: 100px; margin: 10px 0; }
+    .output { padding: 10px; background: #f5f5f5; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <h1>🎯 Zingo Formatter</h1>
+  <p>На сайті — той самий код, що і в extension</p>
+
+  <div class="controls">
+    <label><input type="checkbox" id="zingo-toggle"> Увімкнути зінго-режим</label><br>
+    <label>Інтенсивність:
+      <select id="intensity">
+        <option value="light">Light</option>
+        <option value="medium" selected>Medium</option>
+        <option value="hardcore">Hardcore</option>
+      </select>
+    </label>
+  </div>
+
+  <textarea id="input" placeholder="Введіть текст...">Где вы были 8 лет? Почему вы так думаете?</textarea>
+  <div class="output" id="output"></div>
+
+  <!-- Способ 1: ESM (сучасні браузери) -->
+  <script type="module">
+    import { formatText } from './dist/browser.es.js';
+
+    const input = document.getElementById('input');
+    const output = document.getElementById('output');
+    const toggle = document.getElementById('zingo-toggle');
+    const intensity = document.getElementById('intensity');
+
+    function render() {
+      const text = input.value;
+      output.textContent = toggle.checked
+        ? formatText(text, { intensity: intensity.value })
+        : text;
+    }
+
+    input.addEventListener('input', render);
+    toggle.addEventListener('change', render);
+    intensity.addEventListener('change', render);
+    render();
+  </script>
+
+  <!-- Способ 2: UMD (стара школа, через <script>) -->
+  <!--
+  <script src="./dist/browser.umd.js"></script>
+  <script>
+    const input = document.getElementById('input');
+    const output = document.getElementById('output');
+    function render() {
+      output.textContent = ZingoFormatter.formatText(input.value, { intensity: 'medium' });
+    }
+    input.addEventListener('input', render);
+  </script>
+  -->
+</body>
+</html>

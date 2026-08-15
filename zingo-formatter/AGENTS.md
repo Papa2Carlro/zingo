@@ -1,0 +1,18 @@
+
+## MCP Servers
+
+```json
+{
+  "mcpServers": {
+    "zingo-moderation": {
+      "command": "node",
+      "args": [
+        "/Users/maksympryimak/zingo/mcp-moderation/dist/index.js"
+      ],
+      "env": {
+        "ZINGO_WORKER_API_URL": "https://your-worker.workers.dev"
+      }
+    }
+  }
+}
+```
