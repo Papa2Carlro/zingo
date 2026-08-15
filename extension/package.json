@@ -14,7 +14,8 @@
     "idb": "^8.0.0",
     "nanoid": "^5.0.7",
     "zod": "^3.23.8",
-    "i18next": "^23.11.5"
+    "i18next": "^23.11.5",
+    "zingo-formatter": "file:../zingo-formatter"
   },
   "devDependencies": {
     "wxt": "^0.19.0",

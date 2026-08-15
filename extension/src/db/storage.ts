@@ -12,6 +12,8 @@ const DEFAULT_SETTINGS: Settings = {
   soundEnabled: true,
   autoDetect: true,
   showWeights: true,
+  zingoMode: false,
+  zingoIntensity: 'medium',
 };
 
 export async function initSettings(): Promise<Settings> {

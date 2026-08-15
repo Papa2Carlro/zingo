@@ -1,3 +1,5 @@
+import { defineUnlistedScript } from 'wxt/sandbox';
+
 // Offscreen document for speech recognition
 // This runs in a separate offscreen document context
 
@@ -56,3 +58,8 @@ function stopSpeechRecognition() {
   recognition?.stop();
   recognition = null;
 }
+
+export default defineUnlistedScript(() => {
+  // Offscreen document entry point
+  console.log('ZINGO offscreen document loaded');
+});

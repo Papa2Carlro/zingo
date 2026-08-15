@@ -39,6 +39,8 @@ class PopupUI {
     document.getElementById('setting-auto-detect')?.addEventListener('change', (e) => this.updateSetting('autoDetect', (e.target as HTMLInputElement).checked));
     document.getElementById('setting-api-url')?.addEventListener('change', (e) => this.updateSetting('apiBaseUrl', (e.target as HTMLInputElement).value));
     document.getElementById('setting-api-key')?.addEventListener('change', (e) => this.updateSetting('apiKey', (e.target as HTMLInputElement).value));
+    document.getElementById('setting-zingo-mode')?.addEventListener('change', (e) => this.updateSetting('zingoMode', (e.target as HTMLInputElement).checked));
+    document.getElementById('setting-zingo-intensity')?.addEventListener('change', (e) => this.updateSetting('zingoIntensity', (e.target as HTMLSelectElement).value as Settings['zingoIntensity']));
 
     // Auth
     document.getElementById('btn-login')?.addEventListener('click', () => this.showAuthForm('login'));
@@ -70,6 +72,8 @@ class PopupUI {
     (document.getElementById('setting-auto-detect') as HTMLInputElement).checked = this.settings.autoDetect;
     (document.getElementById('setting-api-url') as HTMLInputElement).value = this.settings.apiBaseUrl;
     (document.getElementById('setting-api-key') as HTMLInputElement).value = this.settings.apiKey || '';
+    (document.getElementById('setting-zingo-mode') as HTMLInputElement).checked = this.settings.zingoMode;
+    (document.getElementById('setting-zingo-intensity') as HTMLSelectElement).value = this.settings.zingoIntensity;
   }
 
   private async updateSetting<K extends keyof Settings>(key: K, value: Settings[K]) {

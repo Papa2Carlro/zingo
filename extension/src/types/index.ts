@@ -42,6 +42,8 @@ export interface Settings {
   soundEnabled: boolean;
   autoDetect: boolean;
   showWeights: boolean;
+  zingoMode: boolean;
+  zingoIntensity: 'light' | 'medium' | 'hardcore';
 }
 
 export interface AnalyticsEvent {

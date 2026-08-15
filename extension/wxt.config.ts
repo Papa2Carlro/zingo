@@ -18,19 +18,6 @@ export default defineConfig({
       service_worker: 'background.ts',
       type: 'module'
     },
-    content_scripts: [
-      {
-        matches: [
-          '*://*.omegle.com/*',
-          '*://*.chatroulette.com/*',
-          '*://*.emeraldchat.com/*',
-          '*://*.monkey.app/*'
-        ],
-        js: ['content.ts'],
-        run_at: 'document_idle',
-        all_frames: false
-      }
-    ],
     action: {
       default_popup: 'popup.html',
       default_title: 'ZINGO'

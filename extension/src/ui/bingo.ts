@@ -6,8 +6,9 @@ import { generateCard, checkBingo } from '../core/generator';
 import { findBestMatch } from '../core/matcher';
 import { speechManager } from '../core/speech';
 import { sendEvent } from '../core/api';
+import { formatText } from 'zingo-formatter';
 
-class BingoUI {
+export class BingoUI {
     private shadowRoot: ShadowRoot;
     private card: BingoCard | null = null;
     private session: GameSession | null = null;
@@ -132,7 +133,7 @@ class BingoUI {
                   data-phrase-id="${phraseId}"
                   data-index="${idx}"
                   ${isMarked ? 'disabled' : ''}>
-            ${phrase ? `<span>${this.escapeHtml(phrase.text)}</span>` : ''}
+            ${phrase ? `<span>${this.escapeHtml(this.formatText(phrase.text))}</span>` : ''}
             ${this.settings?.showWeights && phrase ? `<span class="weight-badge">${phrase.weight}</span>` : ''}
             ${phrase ? `<span class="category-badge ${categoryClass}">${categoryLabel}</span>` : ''}
           </button>
@@ -241,7 +242,7 @@ class BingoUI {
         this.toastElement = document.createElement('div');
         this.toastElement.className = 'zingo-toast';
         this.toastElement.innerHTML = `
-      <div class="message">${t('phraseDetected')}: <strong>"${this.escapeHtml(heard)}"</strong> → <strong>${this.escapeHtml(phrase.text)}</strong>?</div>
+      <div class="message">${t('phraseDetected')}: <strong>"${this.escapeHtml(this.formatText(heard))}"</strong> → <strong>${this.escapeHtml(this.formatText(phrase.text))}</strong>?</div>
       <div class="actions">
         <button class="zingo-btn primary" data-action="yes">${t('yes')}</button>
         <button class="zingo-btn" data-action="no">${t('no')}</button>
@@ -331,6 +332,15 @@ class BingoUI {
         const div = document.createElement('div');
         div.textContent = text;
         return div.innerHTML;
+    }
+
+    private formatText(text: string): string {
+        if (!this.settings?.zingoMode) return text;
+        try {
+            return formatText(text, { intensity: this.settings.zingoIntensity || 'medium' });
+        } catch {
+            return text;
+        }
     }
 }
 
