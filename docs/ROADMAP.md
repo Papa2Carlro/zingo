@@ -28,11 +28,12 @@
 - [ ] Go scaffolding: Gin, GORM, migrate
 - [ ] Postgres + Docker compose
 - [ ] Phrases CRUD + seed з PHRASES.md
-- [ ] Events ingest + rate limit
+- [ ] Events ingest + rate limit (anon_hash / JWT)
+- [ ] Auth: register, login, me (JWT)
 - [ ] Analytics: top, trends, categories
 - [ ] Materialized view + cron
-- [ ] WebSocket /ws/leaderboard
-- [ ] Admin API + Basic Auth
+- [ ] WebSocket /ws/v1/leaderboard
+- [ ] Admin API + JWT ADMIN_TOKEN
 - [ ] Deploy Fly.io + Cloudflare
 
 ## Post MVP

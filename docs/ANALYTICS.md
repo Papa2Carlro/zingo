@@ -36,7 +36,4 @@ GET /api/analytics/categories
 anon_hash = sha256(userAgent + installId)
 Не зв'язуємо з реальною особою
 Opt-out в налаштуваннях плагіна
-
-## Rate Limiting
-100 req/min на anon_hash
-Cloudflare WAF
+Опціональний акаунт: nickname + password (bcrypt), email для відновлення — дає вищі ліміти та історію

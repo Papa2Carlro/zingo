@@ -75,32 +75,43 @@ Go 1.22+ — Gin, GORM, golang-migrate, zerolog
 Postgres 16
 Docker → Fly.io + Cloudflare Tunnel (free)
 
-### Endpoints — Публічні
-GET  /api/phrases
-POST /api/events
-GET  /api/analytics/top?period=day|week|month
-GET  /api/analytics/trends
-GET  /api/analytics/categories
+### Endpoints — Публічні (v1)
+GET  /api/v1/phrases
+POST /api/v1/events
+GET  /api/v1/analytics/top?period=day|week|month
+GET  /api/v1/analytics/trends
+GET  /api/v1/analytics/categories
+
+### Endpoints — Auth (опціонально)
+POST /api/v1/auth/register
+POST /api/v1/auth/login
+GET  /api/v1/auth/me
 
 ### Endpoints — Адмінка
-GET  /api/admin/phrases
-POST /api/admin/phrases
-PATCH /api/admin/phrases/:id
-DELETE /api/admin/phrases/:id
-GET  /api/admin/stats
+GET  /api/v1/admin/phrases
+POST /api/v1/admin/phrases
+PATCH /api/v1/admin/phrases/:id
+DELETE /api/v1/admin/phrases/:id
+GET  /api/v1/admin/stats
 
 ### Auth
-- Публічні: rate limit по anon_hash
-- Адмінка: Basic Auth / JWT з env ADMIN_TOKEN
+- Публічні: rate limit 100 req/min по anon_hash, 1000 req/min з JWT
+- Опціональна реєстрація: nickname + password (bcrypt), email опціонально
+- JWT HS256 24h
+- Адмінка: JWT з env ADMIN_TOKEN
 
 ### Rate Limiting
-- middleware: 100 req/min на anon_hash
-- Cloudflare WAF
+- middleware: 100/1000 req/min
+- Cloudflare WAF + API Key header `X-API-Key`
+
+### CORS
+- `*` для публічних `/api/v1/*`
+- Обмежений для `/api/v1/auth/*` і `/api/v1/admin/*`
 
 ### DB
 Postgres 16
-Indexes: events(ts), events(phrase_id), events(platform), events(anon_hash)
-Міграції: golang-migrate
+Indexes: events(ts), events(phrase_id), events(platform), events(anon_hash), users(nickname)
+Міграції: golang-migrate (SQL файли)
 
 ### Аналітика
 Materialized view daily_phrase_stats
@@ -110,7 +121,19 @@ Cron оновлення кожні 15 хв
 CLI `make seed` — імпорт з docs/PHRASES.md
 
 ### WebSocket
-/ws/leaderboard — real-time топ гравців
+/ws/v1/leaderboard — auth по anon_hash або JWT
+
+### Конфіг
+cleanenv — структурований .env
+
+### Логування
+zerolog JSON
+
+### Makefile цілі
+run, build, test, migrate, migrate-down, seed, docker-build, docker-up, docker-down
+
+### Docker Compose
+postgres + backend
 
 ## Тести
 - Vitest для core логіки
