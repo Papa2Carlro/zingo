@@ -1,0 +1,37 @@
+@use "styles/abstracts/variables" as v;
+
+.ZingoToggle {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  background: v.$surface-raised;
+  border: 1px solid v.$line;
+  border-radius: v.$radius-card;
+}
+
+.ZingoToggle__label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.ZingoToggle__checkbox {
+  width: 16px;
+  height: 16px;
+  accent-color: v.$accent;
+}
+
+.ZingoToggle__text {
+  font-weight: 500;
+  color: v.$ink-primary;
+}
+
+.ZingoToggle__select {
+  padding: 6px 12px;
+  background: v.$surface-base;
+  border: 1px solid v.$line;
+  color: v.$ink-primary;
+  border-radius: v.$radius-sm;
+}
