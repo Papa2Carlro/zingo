@@ -1,0 +1,44 @@
+# Dependencies
+node_modules/
+backend/vendor/
+
+# Build outputs
+dist/
+build/
+*.zip
+wxt/.output/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Database
+*.db
+*.sqlite
+
+# Go
+backend/bin/
+backend/tmp/
+
+# Test coverage
+coverage/
+*.out
+
+# Misc
+*.tmp
+*.temp
