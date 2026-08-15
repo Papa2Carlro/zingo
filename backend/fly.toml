@@ -1,0 +1,32 @@
+# ZINGO Backend - Fly.io Deployment Config
+app = "zingo-backend"
+primary_region = "fra"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  PORT = "8080"
+  GIN_MODE = "release"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+
+[[vm]]
+  memory = "256mb"
+  cpu_kind = "shared"
+  cpus = 1
+
+# PostgreSQL (create with: fly postgres create --name zingo-db)
+# Then attach: fly postgres attach zingo-db --app zingo-backend
+
+# Redis (create with: fly redis create --name zingo-redis)
+# Then attach: fly redis attach zingo-redis --app zingo-backend
+
+# Deploy: fly deploy
+# Logs: fly logs
+# SSH: fly ssh console
