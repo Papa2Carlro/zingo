@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "zingo-moderation": {
+      "command": "/Users/maksympryimak/.nvm/versions/node/v25.2.1/bin/node",
+      "args": [
+        "/Users/maksympryimak/zingo/mcp-moderation/dist/index.js"
+      ],
+      "env": {
+        "ZINGO_WORKER_API_URL": "https://zingo-api.dochubhq.workers.dev"
+      }
+    }
+  }
+}
