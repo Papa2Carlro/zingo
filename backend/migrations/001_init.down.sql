@@ -1,0 +1,7 @@
+-- Drop tables
+
+DROP MATERIALIZED VIEW IF EXISTS daily_phrase_stats;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS card_presets;
+DROP TABLE IF EXISTS events;
+DROP TABLE IF EXISTS phrases;
