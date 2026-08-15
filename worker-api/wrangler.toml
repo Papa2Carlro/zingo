@@ -1,0 +1,12 @@
+name = "zingo-api"
+main = "src/index.ts"
+compatibility_date = "2024-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "zingo-db"
+database_id = "6e8c5eff-5410-41f7-b569-b5331c86644d"
+
+[vars]
+ENVIRONMENT = "production"
