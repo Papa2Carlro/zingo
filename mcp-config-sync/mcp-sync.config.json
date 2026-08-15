@@ -1,0 +1,24 @@
+{
+  "mcpServers": {
+    "zingo-moderation": {
+      "command": "node",
+      "args": ["/Users/maksympryimak/zingo/mcp-moderation/dist/index.js"],
+      "env": {
+        "ZINGO_WORKER_API_URL": "https://your-worker.workers.dev"
+      }
+    }
+  },
+  "targets": [
+    { "path": ".vscode/mcp.json", "type": "json", "mcpKey": "mcpServers" },
+    { "path": ".vscode/settings.json", "type": "json", "mcpKey": "mcp.servers" },
+    { "path": ".cursor/mcp.json", "type": "json", "mcpKey": "mcpServers" },
+    { "path": ".copilot/mcp-config.json", "type": "json", "mcpKey": "mcpServers" },
+    { "path": "mcp.json", "type": "json", "mcpKey": "mcpServers" },
+    { "path": ".mcp.json", "type": "json", "mcpKey": "mcpServers" },
+    { "path": "AGENTS.md", "type": "markdown", "mcpKey": "mcpServers" }
+  ],
+  "searchRoot": "/Users/maksympryimak",
+  "additionalRoots": [],
+  "skipMissing": true,
+  "dryRun": false
+}
