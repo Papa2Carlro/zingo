@@ -9,19 +9,19 @@ const SAMPLE_MESSAGES = [
     id: 1,
     author: 'Олексій',
     text: 'Где вы были 8 лет?',
-    timestamp: new Date(Date.now() - 1000 * 60 * 5),
+    timestamp: '22:07:58',
   },
   {
     id: 2,
     author: 'Марія',
     text: 'Почему вы так думаете? Это очень интересно.',
-    timestamp: new Date(Date.now() - 1000 * 60 * 3),
+    timestamp: '22:09:58',
   },
   {
     id: 3,
     author: 'Дмитро',
     text: 'Я не знаю что сказать, но это круто!',
-    timestamp: new Date(Date.now() - 1000 * 60 * 1),
+    timestamp: '22:11:58',
   },
 ];
 
@@ -56,14 +56,6 @@ const ChatView = () => {
               />
             ))}
           </div>
-        </div>
-
-        <div className="mt-8 p-4 zingo-card">
-          <h3 className="font-semibold mb-2">💡 Як це працює</h3>
-          <p className="text-sm text-slate-400">
-            Увімкніть &ldquo;Зінго режим&rdquo; — і всі повідомлення перетворяться
-            на суржик з українським алфавітом. Той самий код, що і в extension!
-          </p>
         </div>
       </div>
     </main>

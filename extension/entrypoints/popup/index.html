@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZINGO</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #1a1a2e;
+      color: #eaeaea;
+      min-width: 320px;
+    }
+
+    .container {
+      padding: 16px;
+    }
+
+    h1 {
+      color: #e94560;
+      font-size: 20px;
+      margin-bottom: 16px;
+    }
+
+    .section {
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-size: 11px;
+      font-weight: 600;
+      color: #8892b0;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .stat-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 0;
+      border-bottom: 1px solid #0f3460;
+    }
+
+    .stat-label {
+      color: #8892b0;
+      font-size: 13px;
+    }
+
+    .stat-value {
+      font-weight: 600;
+    }
+
+    .btn {
+      background: #16213e;
+      border: 1px solid #0f3460;
+      border-radius: 4px;
+      padding: 8px 12px;
+      font-size: 13px;
+      color: #eaeaea;
+      cursor: pointer;
+      width: 100%;
+      transition: all 0.15s;
+    }
+
+    .btn:hover {
+      border-color: #e94560;
+      color: #e94560;
+    }
+
+    .btn.primary {
+      background: #e94560;
+      border-color: #e94560;
+      color: white;
+    }
+
+    .btn.primary:hover {
+      background: #ff6b6b;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn-row .btn {
+      flex: 1;
+    }
+
+    .setting {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid #0f3460;
+    }
+
+    .setting label {
+      font-size: 13px;
+    }
+
+    .toggle {
+      position: relative;
+      width: 44px;
+      height: 24px;
+    }
+
+    .toggle input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .toggle .slider {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: #0f3460;
+      border-radius: 24px;
+      transition: 0.3s;
+    }
+
+    .toggle .slider:before {
+      content: '';
+      position: absolute;
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background: white;
+      border-radius: 50%;
+      transition: 0.3s;
+    }
+
+    .toggle input:checked+.slider {
+      background: #e94560;
+    }
+
+    .toggle input:checked+.slider:before {
+      transform: translateX(20px);
+    }
+
+    .select {
+      background: #16213e;
+      border: 1px solid #0f3460;
+      border-radius: 4px;
+      padding: 6px 10px;
+      font-size: 12px;
+      color: #eaeaea;
+      cursor: pointer;
+    }
+
+    .input {
+      background: #16213e;
+      border: 1px solid #0f3460;
+      border-radius: 4px;
+      padding: 8px 10px;
+      font-size: 13px;
+      color: #eaeaea;
+      width: 100%;
+      margin-top: 4px;
+    }
+
+    .input:focus {
+      outline: none;
+      border-color: #e94560;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 12px;
+      border-bottom: 1px solid #0f3460;
+      padding-bottom: 4px;
+    }
+
+    .tab {
+      padding: 8px 12px;
+      font-size: 12px;
+      color: #8892b0;
+      cursor: pointer;
+      border-radius: 4px 4px 0 0;
+      transition: all 0.15s;
+    }
+
+    .tab.active {
+      color: #e94560;
+      background: rgba(233, 69, 96, 0.1);
+      border-bottom: 2px solid #e94560;
+    }
+
+    .leaderboard {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .leaderboard-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 10px;
+      background: #16213e;
+      border: 1px solid #0f3460;
+      border-radius: 4px;
+    }
+
+    .leaderboard-rank {
+      font-weight: 700;
+      color: #e94560;
+      min-width: 30px;
+    }
+
+    .leaderboard-name {
+      flex: 1;
+      margin: 0 12px;
+      font-size: 13px;
+    }
+
+    .leaderboard-stats {
+      display: flex;
+      gap: 16px;
+      font-size: 11px;
+      color: #8892b0;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script type="module" src="./popup.tsx"></script>
+</body>
+
+</html>

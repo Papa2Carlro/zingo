@@ -1,4 +1,8 @@
 import { defineConfig } from 'wxt';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
   manifest: {
@@ -19,7 +23,7 @@ export default defineConfig({
       type: 'module'
     },
     action: {
-      default_popup: 'popup.html',
+      default_popup: 'popup/index.html',
       default_title: 'ZINGO'
     },
     options_ui: {
@@ -37,7 +41,13 @@ export default defineConfig({
       128: 'icon/128.png'
     }
   },
-  // modules: ['@wxt-dev/module-react'],
+  modules: ['@wxt-dev/module-react'],
+  entrypointLoader: 'vite-node',
+  srcDir: path.resolve(__dirname, 'src'),
+  entrypointsDir: path.resolve(__dirname, 'entrypoints'),
+  alias: {
+    '@': path.resolve(__dirname, 'src'),
+  },
   runner: {
     startUrls: ['https://omegle.com']
   }
