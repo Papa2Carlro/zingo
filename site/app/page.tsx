@@ -3,24 +3,26 @@
 import ZingoToggle from '../components/ZingoToggle';
 import ChatMessage from '../components/ChatMessage';
 import { ZingoStoreProvider, useZingoStore } from '../stores/zingo';
+import { PROPAGANDA_PHRASES } from '../types';
 
+// Sample messages using real propaganda phrases from the database
 const SAMPLE_MESSAGES = [
   {
     id: 1,
     author: 'Олексій',
-    text: 'Где вы были 8 лет?',
+    text: PROPAGANDA_PHRASES.find(p => p.id === 'svo')?.text || 'специальная военная операция',
     timestamp: '22:07:58',
   },
   {
     id: 2,
     author: 'Марія',
-    text: 'Почему вы так думаете? Это очень интересно.',
+    text: PROPAGANDA_PHRASES.find(p => p.id === 'ukraine_nazis')?.text || 'в украине нацисты',
     timestamp: '22:09:58',
   },
   {
     id: 3,
     author: 'Дмитро',
-    text: 'Я не знаю что сказать, но это круто!',
+    text: PROPAGANDA_PHRASES.find(p => p.id === 'protect_donbass')?.text || 'защита донбасса',
     timestamp: '22:11:58',
   },
 ];
