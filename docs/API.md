@@ -2,7 +2,7 @@
 
 ## Core
 
-### generator.ts
+### generator.ts (зі пакету bingo-generator)
 ```ts
 generateCard(phrases: Phrase[], size?: number, preset?: BingoCard): BingoCard
 generateWeighted(phrases: Phrase[], count: number): string[]
@@ -12,6 +12,15 @@ generateWeighted(phrases: Phrase[], count: number): string[]
 ```ts
 normalize(text: string): string
 fuzzyMatch(input: string, phrases: Phrase[]): Match[]
+levenshtein(a: string, b: string): number
+```
+
+### parser.ts (НОВО)
+```ts
+parseChatText(text: string, phrases: Phrase[], options?: ParserOptions): ParseResult[]
+findBestMatch(text: string, phrases: Phrase[]): ParseResult | null
+batchParse(texts: string[], phrases: Phrase[], options?: ParserOptions): ParseResult[][]
+normalize(text: string): string
 levenshtein(a: string, b: string): number
 ```
 
@@ -32,9 +41,9 @@ onTranscript(cb: (text: string) => void): void
 
 ## UI
 
-### BingoGrid
-Props: card, onMark
-Events: cellMarked, bingoDetected
+### BingoCard
+Props: config (size {x: number, y: number}, phrases: Phrase[], name?: string)
+Events: cell-click, bingo-lines-detected
 
 ### ToastConfirm
 Props: phrase, onConfirm, onReject

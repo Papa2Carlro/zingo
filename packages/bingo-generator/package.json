@@ -1,0 +1,35 @@
+{
+  "name": "bingo-generator",
+  "version": "1.0.0",
+  "description": "Bingo card generation logic - weighted random selection, bingo checking, phrase management",
+  "main": "index.js",
+  "module": "index.ts",
+  "types": "index.ts",
+  "files": [
+    "index.ts",
+    "index.js"
+  ],
+  "exports": {
+    ".": {
+      "import": "./index.ts",
+      "require": "./index.js",
+      "types": "./index.d.ts"
+    }
+  },
+  "main": "index.ts",
+  "types": "index.ts",
+  "scripts": {
+    "test": "echo \"Tests not implemented yet\""
+  },
+  "license": "MIT",
+  "keywords": [
+    "bingo",
+    "generator",
+    "weighted-random",
+    "propaganda",
+    "chat"
+  ],
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

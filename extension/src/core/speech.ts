@@ -1,10 +1,51 @@
-export interface SpeechRecognitionResult {
+// Web Speech API types
+interface SpeechRecognition extends EventTarget {
+  continuous: boolean;
+  interimResults: boolean;
+  lang: string;
+  maxAlternatives: number;
+  start(): void;
+  stop(): void;
+  onresult: (event: SpeechRecognitionEvent) => void;
+  onerror: (event: SpeechRecognitionErrorEvent) => void;
+  onend: () => void;
+}
+
+interface SpeechRecognitionEvent extends Event {
+  resultIndex: number;
+  results: SpeechRecognitionResultList;
+}
+
+interface SpeechRecognitionResultList {
+  length: number;
+  item(index: number): SpeechRecognitionResultItem;
+  [index: number]: SpeechRecognitionResultItem;
+}
+
+interface SpeechRecognitionResultItem {
+  length: number;
+  item(index: number): SpeechRecognitionAlternative;
+  [index: number]: SpeechRecognitionAlternative;
+  isFinal: boolean;
+}
+
+interface SpeechRecognitionAlternative {
+  transcript: string;
+  confidence: number;
+}
+
+interface SpeechRecognitionErrorEvent extends Event {
+  error: string;
+  message: string;
+}
+
+export interface ZingoSpeechResult {
   transcript: string;
   confidence: number;
   isFinal: boolean;
 }
 
-export type SpeechCallback = (result: SpeechRecognitionResult) => void;
+export type SpeechCallback = (result: ZingoSpeechResult) => void;
 
 class SpeechManager {
   private recognition: SpeechRecognition | null = null;
@@ -79,7 +120,7 @@ class SpeechManager {
     }
   }
 
-  stop() {
+  stop(): void {
     this.isListening = false;
     this.recognition?.stop();
     this.callback = null;

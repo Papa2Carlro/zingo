@@ -3,16 +3,17 @@ export interface Phrase {
   text: string;
   variants?: string[];
   weight: number;
-  category: 'propaganda' | 'meme' | 'creepy' | 'standard';
+  category: string;
   lang: string;
   tags?: string[];
-  hits?: number;
+  hits: number;
+  syncedAt?: number;
 }
 
 export interface BingoCard {
   id: string;
   name: string;
-  size: number;
+  size: { x: number; y: number };
   phrases: string[]; // phrase IDs
   isPreset: boolean;
   createdAt: number;
@@ -47,6 +48,7 @@ export interface Settings {
 }
 
 export interface AnalyticsEvent {
+  id?: string;
   phraseId: string;
   category: string;
   platform: string;

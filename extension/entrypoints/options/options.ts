@@ -1,6 +1,6 @@
-import { initSettings, updateSettings, getSetting } from '../db/storage';
-import { initI18n, t, changeLanguage } from '../i18n';
-import type { Settings } from '../types';
+import { initSettings, updateSettings, getSetting } from '@/db/storage';
+import { initI18n, t, changeLanguage } from '@/i18n';
+import type { Settings } from '@/types';
 
 class OptionsUI {
   private settings: Settings | null = null;
@@ -44,8 +44,8 @@ class OptionsUI {
     (document.getElementById('setting-api-key') as HTMLInputElement).value = this.settings.apiKey || '';
   }
 
-  private async updateSetting<K extends keyof Settings>(key: K, value: Settings[K]) {
-    this.settings = await updateSettings({ [key]: value });
+  private async updateSetting(key: keyof Settings, value: unknown) {
+    this.settings = await updateSettings({ [key]: value } as Partial<Settings>);
     if (key === 'uiLanguage') {
       await changeLanguage(value as 'uk' | 'ru' | 'en');
     }
@@ -53,8 +53,8 @@ class OptionsUI {
   }
 
   private async syncPhrases() {
-    const { fetchPhrases } = await import('../core/api');
-    const { savePhrases } = await import('../db/storage');
+    const { fetchPhrases } = await import('@/core/api');
+    const { savePhrases } = await import('@/db/storage');
     try {
       const phrases = await fetchPhrases();
       await savePhrases(phrases);
@@ -65,7 +65,7 @@ class OptionsUI {
   }
 
   private async exportData() {
-    const { getPhrases, getCurrentSession } = await import('../db/storage');
+    const { getPhrases, getCurrentSession, getSetting } = await import('@/db/storage');
     const phrases = await getPhrases();
     const session = await getCurrentSession();
     const cards = await getSetting('cards', []);
@@ -90,11 +90,11 @@ class OptionsUI {
       try {
         const data = JSON.parse(text);
         if (data.phrases) {
-          const { savePhrases } = await import('../db/storage');
+          const { savePhrases } = await import('@/db/storage');
           await savePhrases(data.phrases);
         }
         if (data.session) {
-          const { saveSession } = await import('../db/storage');
+          const { saveSession } = await import('@/db/storage');
           await saveSession(data.session);
         }
         if (data.settings) {
@@ -112,7 +112,7 @@ class OptionsUI {
 
   private async resetAll() {
     if (!confirm('Reset all data?')) return;
-    const db = await import('../db/idb');
+    const db = await import('@/db/idb');
     await db.closeDB();
     indexedDB.deleteDatabase('zingo');
     location.reload();

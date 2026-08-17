@@ -1,33 +1,38 @@
 # Технічні деталі
 
-## Плагін WXT
+## Пакет bingo-generator
 
 ### Структура
-entrypoints/
-  background.ts
-  content.ts
-  offscreen.ts
-  popup.html / popup.ts
-  options.html / options.ts
-src/
-  db/schema.ts
-  db/idb.ts
-  core/generator.ts
-  core/matcher.ts
-  core/speech.ts
-  i18n/
-  ui/bingo/
-  ui/toast/
-  types.ts
+`packages/bingo-generator/`
+- `index.ts` — головний файл з експортами
+- `package.json` — манифест пакету
+- `types.ts` — інтерфейси Phrase, BingoCard
 
-### manifest.json згенеровано WXT
-host_permissions:
-- https://*.omegle.com/*
-- https://*.chatroulette.com/*
-- https://*.emeraldchat.com/*
-- https://*.monkey.app/*
+### Експорти
+- `generateWeighted(phrases, count)` — weighted random selection
+- `generateCard(phrases, options)` — створення картки
+- `checkBingo(card, marked)` — перевірка бінго
+- `defaultPhrases` — дефолтний набір фraz
 
-permissions:
+### Використання
+```bash
+npm install ./packages/bingo-generator
+# або
+yarn add ./packages/bingo-generator
+```
+
+### Інтеграція
+- **Екстеншн (WXT):** імпорт з `bingo-generator` (local path)
+- **Сайт:** CDN import або локальний node_modules
+- **Бекенд:** можна портити на Go або використовувати через ts-node
+
+### Основні файли проєкту
+- `extension/src/core/bingo-card.ts` — Shadow DOM компонент бінго
+- `extension/src/core/parser.ts` — автономний чат-парсер
+- `extension/src/core/generator-utils.ts` — front-end utilities
+- `extension/src/db/` — IndexedDB схема
+- `docs/ARCHITECTURE.md` — архітектурна документація
+- `docs/TECH.md` — технічні деталі
 - storage
 - contextMenus
 

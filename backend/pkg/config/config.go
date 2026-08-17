@@ -2,8 +2,8 @@ package config
 
 import (
 	"fmt"
+	"os"
 	"github.com/joho/godotenv"
-	"github.com/urfave/cli/v2"
 )
 
 type Config struct {
@@ -120,14 +120,14 @@ func Load() (*Config, error) {
 }
 
 func getEnv(key, defaultValue string) string {
-	if val := cli.GetEnv(key); val != "" {
+	if val := os.Getenv(key); val != "" {
 		return val
 	}
 	return defaultValue
 }
 
 func getEnvInt(key string, defaultValue int) int {
-	if val := cli.GetEnv(key); val != "" {
+	if val := os.Getenv(key); val != "" {
 		var result int
 		_, _ = fmt.Sscanf(val, "%d", &result)
 		if result > 0 {

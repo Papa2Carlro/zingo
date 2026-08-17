@@ -1,13 +1,20 @@
-# Planning
+# Planning Docs
 
-Планування MVP та post-MVP.
+Cart tracking of ZINGO development.
 
-## Структура
-- `drafts/` — чернетки ADR, специфікації
-- `exports/` — експорти з Doc Hub
+## Structure
+- `drafts/` — ADR drafts та roadmap drafts
+- `exports/` — Published docs та zingos
+- `roadmaps/` — Roadmap phases
+- `ADR/` — Architecture decision records
 
-## Поточний план
-Див. ROADMAP.md
+## Active ADRs
+- ADR 0007 — View-scoped Zustand hybrid
+
+## Roadmap Phases
+- MVP: Bingo card generation + parser
+- Phase 2: Backend integration
+- Phase 3: Analytics + stats
 
 ## Наступні кроки
 1. WXT scaffolding

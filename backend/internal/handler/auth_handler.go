@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/Papa2Carlro/zingo/backend/internal/model"
 	"github.com/Papa2Carlro/zingo/backend/internal/service"
 )
 
@@ -100,7 +101,7 @@ func (h *AuthHandler) Me(c *gin.Context) {
 	c.JSON(http.StatusOK, toUserResponse(user))
 }
 
-func toUserResponse(user *service.User) *UserResponse {
+func toUserResponse(user *model.User) *UserResponse {
 	return &UserResponse{
 		ID:       user.ID,
 		Nickname: user.Nickname,

@@ -1,7 +1,7 @@
-import { initSettings, updateSettings, getSetting, getPhrases, getCurrentSession, saveSession } from '../db/storage';
-import { fetchPhrases, fetchAnalyticsTop, fetchLeaderboard, registerUser, loginUser, sendEvent } from '../core/api';
-import { initI18n, t, changeLanguage } from '../i18n';
-import type { Settings, Phrase, GameSession } from '../types';
+import { initSettings, updateSettings, getSetting, getPhrases, getCurrentSession, saveSession } from '@/db/storage';
+import { fetchPhrases, fetchAnalyticsTop, fetchLeaderboard, registerUser, loginUser, sendEvent } from '@/core/api';
+import { initI18n, t, changeLanguage } from '@/i18n';
+import type { Settings, Phrase, GameSession } from '@/types';
 
 class PopupUI {
   private settings: Settings | null = null;
@@ -56,8 +56,14 @@ class PopupUI {
 
   private switchTab(tab: string) {
     this.currentTab = tab;
-    document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
-    document.querySelectorAll('[id^="panel-"]').forEach(p => p.classList.toggle('hidden', p.id !== `panel-${tab}`));
+    document.querySelectorAll('.tab').forEach(t => {
+      const el = t as HTMLElement;
+      el.classList.toggle('active', el.dataset.tab === tab);
+    });
+    document.querySelectorAll('[id^="panel-"]').forEach(p => {
+      const el = p as HTMLElement;
+      el.classList.toggle('hidden', el.id !== `panel-${tab}`);
+    });
   }
 
   private applySettings() {
@@ -76,8 +82,8 @@ class PopupUI {
     (document.getElementById('setting-zingo-intensity') as HTMLSelectElement).value = this.settings.zingoIntensity;
   }
 
-  private async updateSetting<K extends keyof Settings>(key: K, value: Settings[K]) {
-    this.settings = await updateSettings({ [key]: value });
+  private async updateSetting(key: keyof Settings, value: unknown) {
+    this.settings = await updateSettings({ [key]: value } as Partial<Settings>);
     if (key === 'uiLanguage') {
       await changeLanguage(value as 'uk' | 'ru' | 'en');
       this.retranslateUI();
@@ -243,7 +249,14 @@ class PopupUI {
       const text = await file.text();
       try {
         const data = JSON.parse(text);
-        if (data.phrases) await saveSession(data.session);
+        if (data.phrases) {
+          const { savePhrases } = await import('@/db/storage');
+          await savePhrases(data.phrases);
+        }
+        if (data.session) {
+          const { saveSession } = await import('@/db/storage');
+          await saveSession(data.session);
+        }
         alert(t('importSuccess'));
       } catch {
         alert(t('error'));
@@ -255,7 +268,7 @@ class PopupUI {
   private async syncPhrases() {
     try {
       const phrases = await fetchPhrases();
-      const { savePhrases } = await import('../db/storage');
+      const { savePhrases } = await import('@/db/storage');
       await savePhrases(phrases);
       this.settings = await updateSettings({});
       alert(t('exportSuccess'));

@@ -21,7 +21,7 @@ interface ZingoDBSchema extends DBSchema {
     value: {
       id: string;
       name: string;
-      size: number;
+      size: { x: number; y: number };
       phrases: string[];
       isPreset: boolean;
       createdAt: number;
@@ -60,6 +60,7 @@ interface ZingoDBSchema extends DBSchema {
       source: 'manual' | 'speech' | 'text';
       retries: number;
     };
+    indexes: { 'by-timestamp': number };
   };
 }
 

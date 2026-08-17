@@ -2,6 +2,7 @@
 
 ## High Level
 Плагін MV3 → Content Script інжектить UI → Підписка на DOM / Speech → IndexedDB кеш → API бекенд → Генератор карток → UI бінго
+Флаги: пакет bingo-generator, parser.ts, bingo-card.ts
 Аналітика: кожна подія → бекенд → графіки
 
 ## Компоненти

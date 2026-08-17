@@ -7,7 +7,7 @@ import (
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
-	"gorm.io/gorm/logger"
+	gormLogger "gorm.io/gorm/logger"
 
 	"github.com/Papa2Carlro/zingo/backend/pkg/logger"
 )
@@ -15,18 +15,18 @@ import (
 func New(dsn string) (*gorm.DB, error) {
 	log := logger.Get()
 
-	gormLogger := logger.New(
+	gormLog := gormLogger.New(
 		&log,
-		logger.Config{
+		gormLogger.Config{
 			SlowThreshold:             time.Second,
-			LogLevel:                  logger.Info,
+			LogLevel:                  gormLogger.Info,
 			IgnoreRecordNotFoundError: true,
 			Colorful:                  false,
 		},
 	)
 
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{
-		Logger: gormLogger,
+		Logger: gormLog,
 		NowFunc: func() time.Time {
 			return time.Now().UTC()
 		},

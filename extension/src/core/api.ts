@@ -1,14 +1,42 @@
 import { getSetting } from '../db/idb';
-import type { AnalyticsEvent, ApiResponse, Phrase, BingoCard, LeaderboardEntry } from '../types';
+import type { AnalyticsEvent, ApiResponse, Phrase, BingoCard, LeaderboardEntry, Settings } from '../types';
 
-const DEFAULT_BASE_URL = 'https://api.zingo.example.com';
+const DEFAULT_BASE_URL = 'http://localhost:8080';
 
 async function getBaseUrl(): Promise<string> {
-  return (await getSetting('settings', { apiBaseUrl: DEFAULT_BASE_URL })).apiBaseUrl;
+  const defaultSettings: Settings = {
+    apiBaseUrl: DEFAULT_BASE_URL,
+    anonHash: '',
+    speechEnabled: false,
+    speechLang: 'ru-RU',
+    uiLanguage: 'uk',
+    theme: 'dark',
+    position: 'right',
+    soundEnabled: true,
+    autoDetect: true,
+    showWeights: true,
+    zingoMode: false,
+    zingoIntensity: 'medium',
+  };
+  return (await getSetting('settings', defaultSettings)).apiBaseUrl;
 }
 
 async function getHeaders(): Promise<HeadersInit> {
-  const settings = await getSetting('settings', { apiBaseUrl: DEFAULT_BASE_URL });
+  const defaultSettings: Settings = {
+    apiBaseUrl: DEFAULT_BASE_URL,
+    anonHash: '',
+    speechEnabled: false,
+    speechLang: 'ru-RU',
+    uiLanguage: 'uk',
+    theme: 'dark',
+    position: 'right',
+    soundEnabled: true,
+    autoDetect: true,
+    showWeights: true,
+    zingoMode: false,
+    zingoIntensity: 'medium',
+  };
+  const settings = await getSetting('settings', defaultSettings);
   const headers: HeadersInit = {
     'Content-Type': 'application/json',
     'X-Anon-Hash': settings.anonHash,

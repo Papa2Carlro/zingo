@@ -24,7 +24,7 @@ func (s *EventService) GetStatsByCategory(ctx context.Context, since time.Time) 
 	return s.eventRepo.GetStatsByCategory(ctx, since)
 }
 
-func (s *EventService) GetTopPhrases(ctx context.Context, since time.Time, limit int) ([]repo.PhraseStat, error) {
+func (s *EventService) GetTopPhrases(ctx context.Context, since time.Time, limit int) ([]model.PhraseStat, error) {
 	return s.eventRepo.GetTopPhrases(ctx, since, limit)
 }
 

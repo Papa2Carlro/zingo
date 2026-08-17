@@ -16,7 +16,7 @@ func NewAnalyticsService(eventRepo *repo.EventRepo) *AnalyticsService {
 	return &AnalyticsService{eventRepo: eventRepo}
 }
 
-func (s *AnalyticsService) GetTopPhrases(ctx context.Context, period string, limit int) ([]repo.PhraseStat, error) {
+func (s *AnalyticsService) GetTopPhrases(ctx context.Context, period string, limit int) ([]model.PhraseStat, error) {
 	since := getSince(period)
 	return s.eventRepo.GetTopPhrases(ctx, since, limit)
 }

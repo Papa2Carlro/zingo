@@ -83,3 +83,9 @@ type DailyPhraseStat struct {
 func (DailyPhraseStat) TableName() string {
 	return "daily_phrase_stats"
 }
+
+type PhraseStat struct {
+	PhraseID uint
+	Category string
+	Count    int64
+}

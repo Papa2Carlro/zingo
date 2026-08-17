@@ -84,3 +84,7 @@ func (s *PhraseService) Delete(ctx context.Context, id uint) error {
 func (s *PhraseService) BulkCreate(ctx context.Context, phrases []model.Phrase) error {
 	return s.phraseRepo.BulkCreate(ctx, phrases)
 }
+
+func (s *PhraseService) GetByID(ctx context.Context, id uint) (*model.Phrase, error) {
+	return s.phraseRepo.GetByID(ctx, id)
+}

@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/golang-migrate/migrate/v4"
 	_ "github.com/golang-migrate/migrate/v4/database/postgres"
@@ -18,10 +19,15 @@ func main() {
 		os.Exit(1)
 	}
 
+	// Convert DSN to PostgreSQL URL format for golang-migrate
+	// DSN format: "host=localhost port=5432 user=zingo password=zingo dbname=zingo sslmode=disable"
+	// URL format: "postgres://zingo:zingo@localhost:5432/zingo?sslmode=disable"
 	dsn := cfg.Database.DSN()
+	url := dsnToURL(dsn)
+
 	m, err := migrate.New(
 		"file://migrations",
-		"postgres://"+dsn,
+		url,
 	)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Migrate error: %v\n", err)
@@ -48,4 +54,23 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Unknown direction: %s\n", *direction)
 		os.Exit(1)
 	}
+}
+
+func dsnToURL(dsn string) string {
+	// Parse key=value pairs
+	params := make(map[string]string)
+	for _, part := range strings.Fields(dsn) {
+		if kv := strings.SplitN(part, "=", 2); len(kv) == 2 {
+			params[kv[0]] = kv[1]
+		}
+	}
+	
+	user := params["user"]
+	password := params["password"]
+	host := params["host"]
+	port := params["port"]
+	dbname := params["dbname"]
+	sslmode := params["sslmode"]
+	
+	return fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=%s", user, password, host, port, dbname, sslmode)
 }

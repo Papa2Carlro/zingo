@@ -85,9 +85,3 @@ func (r *EventRepo) GetTopPhrases(ctx context.Context, since time.Time, limit in
 	}
 	return stats, nil
 }
-
-type PhraseStat struct {
-	PhraseID uint
-	Category string
-	Count    int64
-}

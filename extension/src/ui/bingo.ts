@@ -4,9 +4,9 @@ import type { BingoCard, GameSession, Phrase, Settings } from '../types';
 import { getPhrases, getCurrentSession, saveSession, initSettings, updateSettings } from '../db/storage';
 import { generateCard, checkBingo } from '../core/generator';
 import { findBestMatch } from '../core/matcher';
-import { speechManager } from '../core/speech';
+import { speechManager, type ZingoSpeechResult } from '../core/speech';
 import { sendEvent } from '../core/api';
-import { formatText } from 'zingo-formatter';
+import { formatText } from '../../../packages/zingo-formatter/dist';
 
 export class BingoUI {
     private shadowRoot: ShadowRoot;
@@ -28,8 +28,13 @@ export class BingoUI {
     async init() {
         this.settings = await initSettings();
         await initI18n(this.settings.uiLanguage);
-        this.phrases = await getPhrases();
-        this.session = await getCurrentSession();
+
+        // Sync phrases from backend on startup
+        const { syncPhrases } = await import('../db/storage');
+        this.phrases = await syncPhrases();
+
+        const session = await getCurrentSession();
+        this.session = session ?? null;
 
         if (!this.session && this.phrases.length > 0) {
             await this.newGame();
@@ -45,14 +50,17 @@ export class BingoUI {
 
     private async getCard(id: string): Promise<BingoCard | null> {
         const { getCard } = await import('../db/storage');
-        return getCard(id);
+        const card = await getCard(id);
+        return card ?? null;
     }
 
     async newGame() {
+        // Phrases are already synced in init()
         if (this.phrases.length < 25) {
-            await this.syncPhrases();
+            const { syncPhrases } = await import('../db/storage');
+            this.phrases = await syncPhrases();
         }
-        this.card = generateCard(this.phrases, 5);
+        this.card = generateCard(this.phrases, { x: 5, y: 5 });
         this.session = {
             id: crypto.randomUUID(),
             cardId: this.card.id,
@@ -105,14 +113,14 @@ export class BingoUI {
     }
 
     private renderCard(): string {
-        const size = this.card!.size;
+        const { x: width, y: height } = this.card!.size;
         const marked = this.session!.marked;
         const bingoLines = checkBingo(this.card!, marked);
 
         let gridHtml = '';
-        for (let r = 0; r < size; r++) {
-            for (let c = 0; c < size; c++) {
-                const idx = r * size + c;
+        for (let r = 0; r < height; r++) {
+            for (let c = 0; c < width; c++) {
+                const idx = r * width + c;
                 const phraseId = this.card!.phrases[idx];
                 const phrase = this.phrases.find(p => p.id === phraseId);
                 const isMarked = !!marked[phraseId];
@@ -120,7 +128,7 @@ export class BingoUI {
                     if (line.startsWith('row-')) return parseInt(line.split('-')[1]) === r;
                     if (line.startsWith('col-')) return parseInt(line.split('-')[1]) === c;
                     if (line === 'diag-main') return r === c;
-                    if (line === 'diag-anti') return r + c === size - 1;
+                    if (line === 'diag-anti') return r + c === width - 1;
                     return false;
                 });
 
@@ -142,7 +150,7 @@ export class BingoUI {
         }
 
         const markedCount = Object.keys(marked).length;
-        const totalCells = size * size;
+        const totalCells = width * height;
 
         return `
       <div class="zingo-card">
@@ -153,7 +161,7 @@ export class BingoUI {
             <button class="zingo-btn" id="zingo-settings" title="${t('settings')}">⚙</button>
           </div>
         </div>
-        <div class="zingo-grid" style="grid-template-columns: repeat(${size}, 1fr);">
+        <div class="zingo-grid" style="grid-template-columns: repeat(${width}, 1fr);">
           ${gridHtml}
         </div>
         <div style="margin-top: 8px; display: flex; justify-content: space-between; font-size: 11px; color: var(--zingo-text-muted);">
@@ -228,7 +236,7 @@ export class BingoUI {
         this.speechActive = true;
     }
 
-    private handleSpeechResult(result: { transcript: string; confidence: number; isFinal: boolean }) {
+    private handleSpeechResult(result: ZingoSpeechResult) {
         if (!result.isFinal || result.confidence < 0.7) return;
         const match = findBestMatch(result.transcript, this.phrases);
         if (match && match.confidence > 0.8) {
@@ -301,6 +309,7 @@ export class BingoUI {
             const { getPendingEvents, removePendingEvent, incrementPendingRetries } = await import('../db/storage');
             const pending = await getPendingEvents();
             for (const event of pending) {
+                if (!event.id) continue;
                 try {
                     await sendEvent(event);
                     await removePendingEvent(event.id);

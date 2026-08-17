@@ -1,8 +1,11 @@
 import { getDB, getSetting, setSetting } from './idb';
 import type { Phrase, BingoCard, GameSession, Settings, AnalyticsEvent } from '../types';
 
+// Re-export getSetting for external use
+export { getSetting } from './idb';
+
 const DEFAULT_SETTINGS: Settings = {
-  apiBaseUrl: 'https://api.zingo.example.com',
+  apiBaseUrl: 'http://localhost:8080',
   anonHash: '',
   speechEnabled: false,
   speechLang: 'ru-RU',
@@ -48,7 +51,11 @@ export async function savePhrases(phrases: Phrase[]): Promise<void> {
 
 export async function getCards(): Promise<BingoCard[]> {
   const db = await getDB();
-  return db.getAll('cards');
+  const cards = await db.getAll('cards');
+  return cards.map(card => ({
+    ...card,
+    size: typeof card.size === 'number' ? { x: card.size, y: card.size } : card.size,
+  }));
 }
 
 export async function saveCard(card: BingoCard): Promise<void> {
@@ -58,7 +65,12 @@ export async function saveCard(card: BingoCard): Promise<void> {
 
 export async function getCard(id: string): Promise<BingoCard | undefined> {
   const db = await getDB();
-  return db.get('cards', id);
+  const card = await db.get('cards', id);
+  if (!card) return undefined;
+  return {
+    ...card,
+    size: typeof card.size === 'number' ? { x: card.size, y: card.size } : card.size,
+  };
 }
 
 export async function deleteCard(id: string): Promise<void> {
@@ -116,4 +128,11 @@ function generateAnonHash(): string {
     hash |= 0;
   }
   return 'anon_' + Math.abs(hash).toString(36) + '_' + Date.now().toString(36);
+}
+
+export async function syncPhrases(): Promise<Phrase[]> {
+  const { fetchPhrases } = await import('../core/api');
+  const phrases = await fetchPhrases();
+  await savePhrases(phrases);
+  return phrases;
 }

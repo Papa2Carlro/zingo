@@ -20,6 +20,22 @@ CREATE UNIQUE INDEX idx_phrase_text ON phrases(text) WHERE deleted_at IS NULL;
 CREATE INDEX idx_phrase_category ON phrases(category);
 CREATE INDEX idx_phrase_weight ON phrases(weight DESC);
 
+-- Users table
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    deleted_at TIMESTAMPTZ,
+    nickname VARCHAR(50) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE,
+    anon_hash VARCHAR(128) NOT NULL UNIQUE,
+    is_admin BOOLEAN NOT NULL DEFAULT FALSE
+);
+
+CREATE INDEX idx_users_nickname ON users(nickname);
+CREATE INDEX idx_users_anon_hash ON users(anon_hash);
+
 -- Events table
 CREATE TABLE events (
     id BIGSERIAL PRIMARY KEY,
@@ -51,22 +67,6 @@ CREATE TABLE card_presets (
 );
 
 CREATE INDEX idx_card_presets_public ON card_presets(is_public) WHERE deleted_at IS NULL;
-
--- Users table
-CREATE TABLE users (
-    id SERIAL PRIMARY KEY,
-    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    deleted_at TIMESTAMPTZ,
-    nickname VARCHAR(50) NOT NULL UNIQUE,
-    password_hash VARCHAR(255) NOT NULL,
-    email VARCHAR(255) UNIQUE,
-    anon_hash VARCHAR(128) NOT NULL UNIQUE,
-    is_admin BOOLEAN NOT NULL DEFAULT FALSE
-);
-
-CREATE INDEX idx_users_nickname ON users(nickname);
-CREATE INDEX idx_users_anon_hash ON users(anon_hash);
 
 -- Daily phrase stats materialized view
 CREATE MATERIALIZED VIEW daily_phrase_stats AS
