@@ -1,71 +1,14 @@
 import { findProjectRoots, readConfigFile, writeConfigFile, updateMarkdownMCPConfig, deepMerge, setNestedValue } from "./utils.js";
-import { loadConfig, SyncConfig } from "./config.js";
+import { loadConfig, SyncConfig, GLOBAL_CONFIG_LOCATIONS } from "./config.js";
 import { MCPServerConfig, TargetConfig } from "./types.js";
 import { join } from "path";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
+import { syncMCPConfigs } from "./sync.js";
+import { pathExists } from "fs-extra";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-
-async function syncMCPConfigs(config: SyncConfig) {
-    console.log("🔍 Finding project roots...");
-    const projectRoots = await findProjectRoots(config.searchRoot || process.cwd(), config.additionalRoots);
-    console.log(`Found ${projectRoots.length} project(s):`);
-    projectRoots.forEach(root => console.log(`  - ${root}`));
-
-    let updated = 0;
-    let skipped = 0;
-    let errors = 0;
-
-    for (const root of projectRoots) {
-        console.log(`\n📁 Processing: ${root}`);
-
-        for (const target of config.targets) {
-            const filePath = join(root, target.path);
-
-            try {
-                if (target.type === "markdown") {
-                    await updateMarkdownMCPConfig(filePath, config.mcpServers);
-                    console.log(`  ✅ Updated ${target.path}`);
-                    updated++;
-                } else {
-                    let configData: any = {};
-
-                    // Read existing config if exists
-                    try {
-                        configData = await readConfigFile(filePath, target.type);
-                    } catch {
-                        // File doesn't exist, start fresh
-                    }
-
-                    // Merge MCP servers
-                    const newConfig = setNestedValue(configData, target.mcpKey, config.mcpServers);
-
-                    // Write back
-                    if (!config.dryRun) {
-                        await writeConfigFile(filePath, newConfig, target.type);
-                    }
-                    console.log(`  ✅ Updated ${target.path} ${config.dryRun ? "(dry run)" : ""}`);
-                    updated++;
-                }
-            } catch (error) {
-                if ((error as any).code === "ENOENT" && config.skipMissing && target.path !== "AGENTS.md") {
-                    // File doesn't exist and it's not AGENTS.md - skip silently
-                    skipped++;
-                } else {
-                    console.error(`  ❌ Error updating ${target.path}:`, (error as Error).message);
-                    errors++;
-                }
-            }
-        }
-    }
-
-    console.log(`\n📊 Summary:`);
-    console.log(`  ✅ Updated: ${updated}`);
-    console.log(`  ⏭️  Skipped: ${skipped}`);
-    console.log(`  ❌ Errors: ${errors}`);
-}
 
 // CLI entry point
 async function main() {
@@ -75,6 +18,8 @@ async function main() {
     let configPath: string | undefined;
     let dryRun = false;
     let searchRoot: string | undefined;
+    let listGlobal = false;
+    let globalOnly = false;
     
     for (let i = 0; i < args.length; i++) {
         if (args[i] === "--config" || args[i] === "-c") {
@@ -83,15 +28,21 @@ async function main() {
             dryRun = true;
         } else if (args[i] === "--root" || args[i] === "-r") {
             searchRoot = args[++i];
+        } else if (args[i] === "--list-global" || args[i] === "-l") {
+            listGlobal = true;
+        } else if (args[i] === "--global-only" || args[i] === "-g") {
+            globalOnly = true;
         } else if (args[i] === "--help" || args[i] === "-h") {
             console.log(`
 Usage: mcp-sync [options]
 
 Options:
-  -c, --config <path>    Path to config file (default: auto-detect)
-  -d, --dry-run          Show what would be changed without writing
-  -r, --root <path>      Root directory to search for projects
-  -h, --help             Show this help message
+  -c, --config <path>       Path to config file (default: auto-detect)
+  -d, --dry-run             Show what would be changed without writing
+  -r, --root <path>         Root directory to search for projects
+  -l, --list-global         List all global config locations and their status
+  -g, --global-only         Only sync global configs (skip project discovery)
+  -h, --help                Show this help message
 
 Config file (mcp-sync.config.json):
 {
@@ -108,7 +59,9 @@ Config file (mcp-sync.config.json):
   "searchRoot": "/path/to/search",
   "additionalRoots": ["/extra/path"],
   "skipMissing": true,
-  "dryRun": false
+  "dryRun": false,
+  "includeGlobal": true,
+  "globalOnly": false
 }
 `);
             process.exit(0);
@@ -120,13 +73,42 @@ Config file (mcp-sync.config.json):
     // Override with CLI args
     if (dryRun) config.dryRun = true;
     if (searchRoot) config.searchRoot = searchRoot;
+    if (globalOnly) config.globalOnly = true;
+    
+    if (listGlobal) {
+        await listGlobalConfigs();
+        process.exit(0);
+    }
     
     if (Object.keys(config.mcpServers).length === 0) {
         console.error("❌ No MCP servers configured. Please provide a config file or use --config.");
         process.exit(1);
     }
     
-    await syncMCPConfigs(config);
+    const result = await syncMCPConfigs(config);
+    
+    // Print logs
+    for (const log of result.logs) {
+        console.log(log);
+    }
+    
+    if (result.errors > 0) {
+        process.exit(1);
+    }
+}
+
+async function listGlobalConfigs() {
+    console.log("🌍 Global MCP Config Locations:\n");
+    
+    for (const loc of GLOBAL_CONFIG_LOCATIONS) {
+        const exists = await pathExists(loc.path);
+        const status = exists ? "✅ EXISTS" : "❌ NOT FOUND";
+        console.log(`  ${status}  ${loc.name}`);
+        console.log(`         Path: ${loc.path}`);
+        console.log(`         Format: ${loc.format || 'standard'} (${loc.type})`);
+        console.log(`         Key: ${loc.mcpKey}`);
+        console.log("");
+    }
 }
 
 main().catch(console.error);

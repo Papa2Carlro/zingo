@@ -1,3 +1,7 @@
+
+## MCP Servers
+
+```json
 {
   "mcpServers": {
     "zingo-moderation": {
@@ -8,16 +12,7 @@
       "env": {
         "ZINGO_WORKER_API_URL": "https://your-worker.workers.dev"
       }
-    },
-    "doc-memory": {
-      "command": "/Users/maksympryimak/.config/doc-hub/bin/dm",
-      "args": [
-        "mcp"
-      ],
-      "env": {
-        "DOC_MEMORY_WORKSPACE": "${workspaceFolder}",
-        "DOC_ROOT": "Docs"
-      }
     }
   }
 }
+```

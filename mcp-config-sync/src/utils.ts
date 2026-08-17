@@ -17,7 +17,7 @@ export async function findProjectRoots(searchRoot: string, additionalRoots: stri
   // Find all package.json files (indicates project root)
   const packageJsons = await glob("**/package.json", { 
     cwd: searchRoot,
-    ignore: ["**/node_modules/**", "**/.git/**", "**/dist/**", "**/.output/**"]
+    ignore: ["**/node_modules/**", "**/.git/**", "**/dist/**", "**/.output/**", "**/Library/**", "**/Caches/**", "**/Application Support/**"]
   });
   
   for (const pkg of packageJsons) {
@@ -187,5 +187,44 @@ export async function updateMarkdownMCPConfig(filePath: string, mcpServers: Reco
     content = content.trimEnd() + mcpBlock;
   }
   
+  await writeFile(filePath, content, "utf-8");
+}
+
+export async function readGlobalConfig(filePath: string, type: string): Promise<any> {
+  return readConfigFile(filePath, type);
+}
+
+export async function writeGlobalConfig(filePath: string, data: any, type: string, format?: string): Promise<void> {
+  // For special formats, we may need custom serialization
+  if (format === "codex" && type === "toml") {
+    await writeCodexTOMLConfig(filePath, data);
+    return;
+  }
+  
+  await writeConfigFile(filePath, data, type);
+}
+
+async function writeCodexTOMLConfig(filePath: string, data: any): Promise<void> {
+  const fsExtra = await import("fs-extra");
+  const { readFile, writeFile } = fsExtra.default;
+  
+  // Read existing TOML to preserve other settings
+  let existingContent = "";
+  try {
+    existingContent = await readFile(filePath, "utf-8");
+  } catch {
+    // File doesn't exist
+  }
+  
+  // Parse existing TOML
+  const existing = parseTOML(existingContent);
+  
+  // Update mcp_servers section
+  if (data.mcp_servers) {
+    existing.mcp_servers = data.mcp_servers;
+  }
+  
+  // Write back as TOML
+  const content = stringifyTOML(existing);
   await writeFile(filePath, content, "utf-8");
 }

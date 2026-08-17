@@ -1,0 +1,26 @@
+{
+  "PascalCase": [
+    {
+      "path": "frontend-code-style.md",
+      "heading": "7. Файли / іменування",
+      "start_line": 216,
+      "snippet": "## 7. Файли / іменування | Що | Як | | ----------------- | ------------------------------------------ | | Компонент / папка | `PascalCase` | | Хуки | `useSomething.ts` / `useSometh"
+    }
+  ],
+  "SettingsUpdateCard": [
+    {
+      "path": "frontend-code-style.md",
+      "heading": "9. Чекліст міграції (Doc Hub)",
+      "start_line": 242,
+      "snippet": "## 9. Чекліст міграції (Doc Hub) - [x] Додати `prettier` + `prettier.config.cjs`, `classnames`, `sass` (`npm run format`). - [x] Завести `src/styles/abstracts` + `styles/base` + `s"
+    }
+  ],
+  "TaskBoardStoreProvider": [
+    {
+      "path": "frontend-code-style.md",
+      "heading": "9. Чекліст міграції (Doc Hub)",
+      "start_line": 242,
+      "snippet": "## 9. Чекліст міграції (Doc Hub) - [x] Додати `prettier` + `prettier.config.cjs`, `classnames`, `sass` (`npm run format`). - [x] Завести `src/styles/abstracts` + `styles/base` + `s"
+    }
+  ]
+}

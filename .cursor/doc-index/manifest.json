@@ -1,0 +1,20 @@
+{
+  "fingerprint": "8ebc439d771fa567",
+  "built_at": "2026-08-17T10:54:06.251204+00:00",
+  "workspace": "/Users/maksympryimak/zingo",
+  "docs_root": "/Users/maksympryimak/zingo/Docs",
+  "file_count": 16,
+  "chunk_count": 170,
+  "route_count": 0,
+  "map_section_count": 11,
+  "symbol_count": 3,
+  "code_path_count": 0,
+  "canonical_home_count": 0,
+  "link_count": 11,
+  "source_counts": {
+    "documentation": 14,
+    "package_docs": 1,
+    "config_truth": 1
+  },
+  "extra_source_count": 2
+}

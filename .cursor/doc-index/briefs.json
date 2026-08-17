@@ -1,0 +1,1028 @@
+{
+  "0007-view-scoped-zustand-hybrid.md": {
+    "path": "0007-view-scoped-zustand-hybrid.md",
+    "title": "ADR 0007 — View-scoped Zustand hybrid for UI state",
+    "status": "",
+    "layer": "other",
+    "source_class": "documentation",
+    "source_role": "docs_tree",
+    "package_scope": null,
+    "authored": "human",
+    "canonicality": 1.0,
+    "workspace_rel": "0007-view-scoped-zustand-hybrid.md",
+    "canonical_path": "0007-view-scoped-zustand-hybrid.md",
+    "first_paragraph": "**Date:** 2026-07-25 **Status:** Accepted **Provenance:** Ported from Finance Launcher ADR 0005 (same decision text; Doc Hub numbering).",
+    "toc": [
+      {
+        "level": 1,
+        "title": "ADR 0007 — View-scoped Zustand hybrid for UI state"
+      },
+      {
+        "level": 2,
+        "title": "Context"
+      },
+      {
+        "level": 2,
+        "title": "Decision"
+      },
+      {
+        "level": 3,
+        "title": "Canonical shape"
+      },
+      {
+        "level": 3,
+        "title": "Put in the view Zustand store"
+      },
+      {
+        "level": 3,
+        "title": "Anti-patterns"
+      },
+      {
+        "level": 2,
+        "title": "Consequences"
+      },
+      {
+        "level": 3,
+        "title": "Positive"
+      },
+      {
+        "level": 3,
+        "title": "Negative / risks"
+      },
+      {
+        "level": 3,
+        "title": "Reference implementation"
+      },
+      {
+        "level": 3,
+        "title": "Follow-ups"
+      },
+      {
+        "level": 2,
+        "title": "Related"
+      }
+    ],
+    "must_lines": [
+      "Contributors must learn the UI-vs-domain boundary; misuse as a global cache recreates the problem."
+    ],
+    "char_count": 4409
+  },
+  "ANALYTICS.md": {
+    "path": "ANALYTICS.md",
+    "title": "Аналітика",
+    "status": "",
+    "layer": "other",
+    "source_class": "documentation",
+    "source_role": "docs_tree",
+    "package_scope": null,
+    "authored": "human",
+    "canonicality": 1.0,
+    "workspace_rel": "ANALYTICS.md",
+    "canonical_path": "ANALYTICS.md",
+    "first_paragraph": "- phrase hit: phraseId, category, platform, ts - card generated, card completed - bingo line detected - speech confirm yes/no - Без персональних даних, без тексту чату",
+    "toc": [
+      {
+        "level": 1,
+        "title": "Аналітика"
+      },
+      {
+        "level": 2,
+        "title": "Що збираємо"
+      },
+      {
+        "level": 2,
+        "title": "Метрики"
+      },
+      {
+        "level": 2,
+        "title": "Візуалізація"
+      },
+      {
+        "level": 2,
+        "title": "Зберігання"
+      },
+      {
+        "level": 2,
+        "title": "API"
+      },
+      {
+        "level": 2,
+        "title": "Приватність"
+      }
+    ],
+    "must_lines": [],
+    "char_count": 926
+  },
+  "API.md": {
+    "path": "API.md",
+    "title": "API референс",
+    "status": "",
+    "layer": "other",
+    "source_class": "documentation",
+    "source_role": "docs_tree",
+    "package_scope": null,
+    "authored": "human",
+    "canonicality": 1.0,
+    "workspace_rel": "API.md",
+    "canonical_path": "API.md",
+    "first_paragraph": "generateCard(phrases: Phrase[], size?: number, preset?: BingoCard): BingoCard generateWeighted(phrases: Phrase[], count: number): string[]",
+    "toc": [
+      {
+        "level": 1,
+        "title": "API референс"
+      },
+      {
+        "level": 2,
+        "title": "Core"
+      },
+      {
+        "level": 3,
+        "title": "generator.ts"
+      },
+      {
+        "level": 3,
+        "title": "matcher.ts"
+      },
+      {
+        "level": 3,
+        "title": "db/idb.ts"
+      },
+      {
+        "level": 3,
+        "title": "speech.ts"
+      },
+      {
+        "level": 2,
+        "title": "UI"
+      },
+      {
+        "level": 3,
+        "title": "BingoGrid"
+      },
+      {
+        "level": 3,
+        "title": "ToastConfirm"
+      }
+    ],
+    "must_lines": [],
+    "char_count": 795
+  },
+  "ARCHITECTURE.md": {
+    "path": "ARCHITECTURE.md",
+    "title": "Архітектура ZINGO",
+    "status": "",
+    "layer": "other",
+    "source_class": "documentation",
+    "source_role": "docs_tree",
+    "package_scope": null,
+    "authored": "human",
+    "canonicality": 1.0,
+    "workspace_rel": "ARCHITECTURE.md",
+    "canonical_path": "ARCHITECTURE.md",
+    "first_paragraph": "Плагін MV3 → Content Script інжектить UI → Підписка на DOM / Speech → IndexedDB кеш → API бекенд → Генератор карток → UI бінго Аналітика: кожна подія → бекенд → графіки",
+    "toc": [
+      {
+        "level": 1,
+        "title": "Архітектура ZINGO"
+      },
+      {
+        "level": 2,
+        "title": "High Level"
+      },
+      {
+        "level": 2,
+        "title": "Компоненти"
+      },
+      {
+        "level": 3,
+        "title": "Background Service Worker"
+      },
+      {
+        "level": 3,
+        "title": "Content Script"
+      },
+      {
+        "level": 3,
+        "title": "Offscreen Document"
+      },
+      {
+        "level": 3,
+        "title": "Popup / Options"
+      },
+      {
+        "level": 2,
+        "title": "Потоки даних"
+      },
+      {
+        "level": 2,
+        "title": "Безпека та Аналітика"
+      },
+      {
+        "level": 2,
+        "title": "Масштабування"
+      }
+    ],
+    "must_lines": [],
+    "char_count": 1386
+  },
+  "BACKEND.md": {
+    "path": "BACKEND.md",
+    "title": "Backend",
+    "status": "",
+    "layer": "other",
+    "source_class": "documentation",
+    "source_role": "docs_tree",
+    "package_scope": null,
+    "authored": "human",
+    "canonicality": 1.0,
+    "workspace_rel": "BACKEND.md",
+    "canonical_path": "BACKEND.md",
+    "first_paragraph": "Go 1.22+ — Gin, GORM, golang-migrate, zerolog",
+    "toc": [
+      {
+        "level": 1,
+        "title": "Backend"
+      },
+      {
+        "level": 2,
+        "title": "Вибір стека"
+      },
+      {
+        "level": 2,
+        "title": "Деплой"
+      },
+      {
+        "level": 2,
+        "title": "Структура"
+      },
+      {
+        "level": 2,
+        "title": "Models"
+      },
+      {
+        "level": 2,
+        "title": "Endpoints — Публічні (v1)"
+      },
+      {
+        "level": 2,
+        "title": "Endpoints — Auth (опціонально)"
+      },
+      {
+        "level": 2,
+        "title": "Endpoints — Адмінка (окремий SPA на /admin)"
+      },
+      {
+        "level": 2,
+        "title": "Auth"
+      },
+      {
+        "level": 2,
+        "title": "Rate Limiting"
+      },
+      {
+        "level": 2,
+        "title": "CORS"
+      },
+      {
+        "level": 2,
+        "title": "DB"
+      },
+      {
+        "level": 2,
+        "title": "Аналітика"
+      },
+      {
+        "level": 2,
+        "title": "Seed фраз"
+      },
+      {
+        "level": 2,
+        "title": "WebSocket"
+      },
+      {
+        "level": 2,
+        "title": "Конфіг"
+      },
+      {
+        "level": 2,
+        "title": "Логування"
+      },
+      {
+        "level": 2,
+        "title": "Makefile цілі"
+      },
+      {
+        "level": 2,
+        "title": "Docker Compose"
+      }
+    ],
+    "must_lines": [],
+    "char_count": 2351
+  },
+  "DEVELOPER_GUIDE.md": {
+    "path": "DEVELOPER_GUIDE.md",
+    "title": "Developer Guide",
+    "status": "",
+    "layer": "other",
+    "source_class": "documentation",
+    "source_role": "docs_tree",
+    "package_scope": null,
+    "authored": "human",
+    "canonicality": 1.0,
+    "workspace_rel": "DEVELOPER_GUIDE.md",
+    "canonical_path": "DEVELOPER_GUIDE.md",
+    "first_paragraph": "npm i -g wxt wxt init zingo npm install npm run dev",
+    "toc": [
+      {
+        "level": 1,
+        "title": "Developer Guide"
+      },
+      {
+        "level": 2,
+        "title": "Швидкий старт"
+      },
+      {
+        "level": 2,
+        "title": "Структура WXT"
+      },
+      {
+        "level": 2,
+        "title": "Локальна БД"
+      },
+      {
+        "level": 2,
+        "title": "Додавання фраз"
+      },
+      {
+        "level": 2,
+        "title": "i18n"
+      },
+      {
+        "level": 2,
+        "title": "Реліз"
+      },
+      {
+        "level": 2,
+        "title": "Контрибьют"
+      },
+      {
+        "level": 2,
+        "title": "Debug"
+      }
+    ],
+    "must_lines": [],
+    "char_count": 720
+  },
+  "PHRASES.md": {
+    "path": "PHRASES.md",
+    "title": "Початкова база фраз",
+    "status": "",
+    "layer": "other",
+    "source_class": "documentation",
+    "source_role": "docs_tree",
+    "package_scope": null,
+    "authored": "human",
+    "canonicality": 1.0,
+    "workspace_rel": "PHRASES.md",
+    "canonical_path": "PHRASES.md",
+    "first_paragraph": "Категорії: propaganda, meme, creepy, standard",
+    "toc": [
+      {
+        "level": 1,
+        "title": "Початкова база фраз"
+      },
+      {
+        "level": 2,
+        "title": "Propaganda"
+      },
+      {
+        "level": 2,
+        "title": "Meme"
+      },
+      {
+        "level": 2,
+        "title": "Creepy"
+      },
+      {
+        "level": 2,
+        "title": "Standard"
+      }
+    ],
+    "must_lines": [],
+    "char_count": 979
+  },
+  "README.md": {
+    "path": "README.md",
+    "title": "ZINGO Documentation Index",
+    "status": "",
+    "layer": "other",
+    "source_class": "documentation",
+    "source_role": "docs_tree",
+    "package_scope": null,
+    "authored": "human",
+    "canonicality": 1.0,
+    "workspace_rel": "README.md",
+    "canonical_path": "README.md",
+    "first_paragraph": "- [SPEC.md](SPEC.md) - Project specification and core concepts - [ARCHITECTURE.md](ARCHITECTURE.md) - System architecture and data flows - [TECH.md](TECH.md) - Technical details and stack - [BACKEND.md](BACKEND.md) - Backend implementation details - [API.md](API.md) - API reference - [SECURITY.md](SECURITY.md) - Security and ethical guidelines - [UI.md](UI�ayout.md) - UI design principles - [PHRASES.md](PHRASES.md) - Initial phrase database - [ROADMAP.md](ROADMAP.md) - Project roadmap and status",
+    "toc": [
+      {
+        "level": 1,
+        "title": "ZINGO Documentation Index"
+      },
+      {
+        "level": 2,
+        "title": "Overview"
+      },
+      {
+        "level": 2,
+        "title": "ADRs (Architecture Decision Records)"
+      },
+      {
+        "level": 2,
+        "title": "Code Style"
+      },
+      {
+        "level": 2,
+        "title": "Project Structure"
+      },
+      {
+        "level": 2,
+        "title": "Quick Start"
+      },
+      {
+        "level": 1,
+        "title": "Development"
+      },
+      {
+        "level": 1,
+        "title": "Backend"
+      },
+      {
+        "level": 1,
+        "title": "Worker API"
+      },
+      {
+        "level": 1,
+        "title": "Site"
+      },
+      {
+        "level": 2,
+        "title": "License"
+      }
+    ],
+    "must_lines": [],
+    "char_count": 1625
+  },
+  "ROADMAP.md": {
+    "path": "ROADMAP.md",
+    "title": "Roadmap",
+    "status": "",
+    "layer": "other",
+    "source_class": "documentation",
+    "source_role": "docs_tree",
+    "package_scope": null,
+    "authored": "human",
+    "canonicality": 1.0,
+    "workspace_rel": "ROADMAP.md",
+    "canonical_path": "ROADMAP.md",
+    "first_paragraph": "- [x] SPEC - [x] PHRASES - [x] ARCHITECTURE - [x] TECH - [x] ADR 0007 — View-scoped Zustand hybrid",
+    "toc": [
+      {
+        "level": 1,
+        "title": "Roadmap"
+      },
+      {
+        "level": 2,
+        "title": "Done"
+      },
+      {
+        "level": 2,
+        "title": "In Progress"
+      },
+      {
+        "level": 2,
+        "title": "MVP — 2026-08-16"
+      },
+      {
+        "level": 2,
+        "title": "MVP+ — 2026-08-17"
+      },
+      {
+        "level": 2,
+        "title": "Backend — 2026-08-16 to 2026-08-17"
+      },
+      {
+        "level": 2,
+        "title": "Post MVP"
+      },
+      {
+        "level": 2,
+        "title": "Nice to have"
+      }
+    ],
+    "must_lines": [],
+    "char_count": 1406
+  },
+  "SECURITY.md": {
+    "path": "SECURITY.md",
+    "title": "Безпека та етика",
+    "status": "",
+    "layer": "other",
+    "source_class": "documentation",
+    "source_role": "docs_tree",
+    "package_scope": null,
+    "authored": "human",
+    "canonicality": 1.0,
+    "workspace_rel": "SECURITY.md",
+    "canonical_path": "SECURITY.md",
+    "first_paragraph": "Фан-проєкт для сатиризації пропаганди. Не є інструментом для шпигунства або збору персональних даних.",
+    "toc": [
+      {
+        "level": 1,
+        "title": "Безпека та етика"
+      },
+      {
+        "level": 2,
+        "title": "Призначення"
+      },
+      {
+        "level": 2,
+        "title": "Принципи"
+      },
+      {
+        "level": 2,
+        "title": "Обмеження"
+      },
+      {
+        "level": 2,
+        "title": "Юридичні ризики"
+      },
+      {
+        "level": 2,
+        "title": "Рекомендації"
+      }
+    ],
+    "must_lines": [],
+    "char_count": 830
+  },
+  "SPEC.md": {
+    "path": "SPEC.md",
+    "title": "ZINGO — Chatroulette Propaganda Bingo",
+    "status": "",
+    "layer": "other",
+    "source_class": "documentation",
+    "source_role": "docs_tree",
+    "package_scope": null,
+    "authored": "human",
+    "canonicality": 1.0,
+    "workspace_rel": "SPEC.md",
+    "canonical_path": "SPEC.md",
+    "first_paragraph": "**Дата:** 2026-08-15 **Статус:** MVP планування **Тип:** Open source, fan project, демонстрація",
+    "toc": [
+      {
+        "level": 1,
+        "title": "ZINGO — Chatroulette Propaganda Bingo"
+      },
+      {
+        "level": 2,
+        "title": "1. Контекст"
+      },
+      {
+        "level": 2,
+        "title": "2. Цільова аудиторія"
+      },
+      {
+        "level": 2,
+        "title": "3. Варіант реалізації"
+      },
+      {
+        "level": 2,
+        "title": "4. Функції MVP"
+      },
+      {
+        "level": 3,
+        "title": "Плагін (MV3)"
+      },
+      {
+        "level": 3,
+        "title": "Бекенд з першого дня"
+      },
+      {
+        "level": 2,
+        "title": "5. Тех стек"
+      },
+      {
+        "level": 3,
+        "title": "Фронт / Плагін"
+      },
+      {
+        "level": 3,
+        "title": "Бекенд — з першого дня"
+      },
+      {
+        "level": 3,
+        "title": "Лендінг / Адмінка — опція"
+      },
+      {
+        "level": 2,
+        "title": "6. Модель даних"
+      },
+      {
+        "level": 3,
+        "title": "Phrase"
+      },
+      {
+        "level": 3,
+        "title": "BingoCard"
+      },
+      {
+        "level": 3,
+        "title": "GameSession"
+      },
+      {
+        "level": 2,
+        "title": "7. Алгоритм генерації картки"
+      },
+      {
+        "level": 2,
+        "title": "8. Детект фраз"
+      },
+      {
+        "level": 3,
+        "title": "Варіант A: Текстовий парсинг"
+      },
+      {
+        "level": 3,
+        "title": "Варіант B: Speech API"
+      },
+      {
+        "level": 3,
+        "title": "Підтвердження"
+      },
+      {
+        "level": 2,
+        "title": "9. i18n"
+      },
+      {
+        "level": 2,
+        "title": "10. Структура плагіна WXT"
+      },
+      {
+        "level": 2,
+        "title": "11. План релізу"
+      },
+      {
+        "level": 2,
+        "title": "12. Є в MVP"
+      },
+      {
+        "level": 2,
+        "title": "Немає в MVP"
+      },
+      {
+        "level": 2,
+        "title": "13. Ризики"
+      },
+      {
+        "level": 2,
+        "title": "14. Ліцензія"
+      },
+      {
+        "level": 2,
+        "title": "15. Наступні кроки"
+      }
+    ],
+    "must_lines": [],
+    "char_count": 4904
+  },
+  "TECH.md": {
+    "path": "TECH.md",
+    "title": "Технічні деталі",
+    "status": "",
+    "layer": "other",
+    "source_class": "documentation",
+    "source_role": "docs_tree",
+    "package_scope": null,
+    "authored": "human",
+    "canonicality": 1.0,
+    "workspace_rel": "TECH.md",
+    "canonical_path": "TECH.md",
+    "first_paragraph": "entrypoints/ background.ts content.ts offscreen.ts popup.html / popup.ts options.html / options.ts src/ db/schema.ts db/idb.ts core/generator.ts core/matcher.ts core/speech.ts i18n/ ui/bingo/ ui/toast/ types.ts",
+    "toc": [
+      {
+        "level": 1,
+        "title": "Технічні деталі"
+      },
+      {
+        "level": 2,
+        "title": "Плагін WXT"
+      },
+      {
+        "level": 3,
+        "title": "Структура"
+      },
+      {
+        "level": 3,
+        "title": "manifest.json згенеровано WXT"
+      },
+      {
+        "level": 3,
+        "title": "IndexedDB схема — кеш"
+      },
+      {
+        "level": 3,
+        "title": "API endpoints"
+      },
+      {
+        "level": 3,
+        "title": "Генератор"
+      },
+      {
+        "level": 3,
+        "title": "Матчер"
+      },
+      {
+        "level": 3,
+        "title": "Speech"
+      },
+      {
+        "level": 3,
+        "title": "i18n"
+      },
+      {
+        "level": 2,
+        "title": "Бекенд — з першого дня, аналітика 100%"
+      },
+      {
+        "level": 3,
+        "title": "Endpoints — Публічні (v1)"
+      },
+      {
+        "level": 3,
+        "title": "Endpoints — Auth (опціонально)"
+      },
+      {
+        "level": 3,
+        "title": "Endpoints — Адмінка"
+      },
+      {
+        "level": 3,
+        "title": "Auth"
+      },
+      {
+        "level": 3,
+        "title": "Rate Limiting"
+      },
+      {
+        "level": 3,
+        "title": "CORS"
+      },
+      {
+        "level": 3,
+        "title": "DB"
+      },
+      {
+        "level": 3,
+        "title": "Аналітика"
+      },
+      {
+        "level": 3,
+        "title": "Seed фраз"
+      },
+      {
+        "level": 3,
+        "title": "WebSocket"
+      },
+      {
+        "level": 3,
+        "title": "Конфіг"
+      },
+      {
+        "level": 3,
+        "title": "Логування"
+      },
+      {
+        "level": 3,
+        "title": "Makefile цілі"
+      },
+      {
+        "level": 3,
+        "title": "Docker Compose"
+      },
+      {
+        "level": 2,
+        "title": "Тести"
+      },
+      {
+        "level": 2,
+        "title": "CI/CD"
+      }
+    ],
+    "must_lines": [],
+    "char_count": 2891
+  },
+  "UI.md": {
+    "path": "UI.md",
+    "title": "UI дизайн",
+    "status": "",
+    "layer": "other",
+    "source_class": "documentation",
+    "source_role": "docs_tree",
+    "package_scope": null,
+    "authored": "human",
+    "canonicality": 1.0,
+    "workspace_rel": "UI.md",
+    "canonical_path": "UI.md",
+    "first_paragraph": "- Невидимий, коли не потрібен - Мінімалістичний, темна тема за замовчуванням - Не заважає чату - Швидкі відмітки",
+    "toc": [
+      {
+        "level": 1,
+        "title": "UI дизайн"
+      },
+      {
+        "level": 2,
+        "title": "Принципи"
+      },
+      {
+        "level": 2,
+        "title": "Компоненти"
+      },
+      {
+        "level": 3,
+        "title": "Bingo Card Overlay"
+      },
+      {
+        "level": 3,
+        "title": "Toast підтвердження"
+      },
+      {
+        "level": 3,
+        "title": "Popup"
+      },
+      {
+        "level": 3,
+        "title": "Options"
+      },
+      {
+        "level": 2,
+        "title": "Стилі"
+      },
+      {
+        "level": 2,
+        "title": "A11y"
+      },
+      {
+        "level": 2,
+        "title": "Темна тема"
+      },
+      {
+        "level": 2,
+        "title": "Мобільна версія"
+      }
+    ],
+    "must_lines": [],
+    "char_count": 966
+  },
+  "frontend-code-style.md": {
+    "path": "frontend-code-style.md",
+    "title": "Frontend code style",
+    "status": "",
+    "layer": "other",
+    "source_class": "documentation",
+    "source_role": "docs_tree",
+    "package_scope": null,
+    "authored": "human",
+    "canonicality": 1.0,
+    "workspace_rel": "frontend-code-style.md",
+    "canonical_path": "frontend-code-style.md",
+    "first_paragraph": "Канон фронтенд-стилю для **Doc Hub** (Tauri + React + TypeScript).",
+    "toc": [
+      {
+        "level": 1,
+        "title": "Frontend code style"
+      },
+      {
+        "level": 2,
+        "title": "0. Поточний стан Doc Hub (базовий)"
+      },
+      {
+        "level": 2,
+        "title": "1. Prettier"
+      },
+      {
+        "level": 2,
+        "title": "2. Структура компонента"
+      },
+      {
+        "level": 2,
+        "title": "3. TypeScript / React"
+      },
+      {
+        "level": 2,
+        "title": "4. SCSS architecture"
+      },
+      {
+        "level": 3,
+        "title": "Глобальні стилі"
+      },
+      {
+        "level": 3,
+        "title": "CSS Modules"
+      },
+      {
+        "level": 3,
+        "title": "Що не робити"
+      },
+      {
+        "level": 2,
+        "title": "5. classnames / bind"
+      },
+      {
+        "level": 2,
+        "title": "6. Імпорти"
+      },
+      {
+        "level": 2,
+        "title": "7. Файли / іменування"
+      },
+      {
+        "level": 2,
+        "title": "8. Відхилення для Doc Hub (свідомі)"
+      },
+      {
+        "level": 2,
+        "title": "9. Чекліст міграції (Doc Hub)"
+      },
+      {
+        "level": 2,
+        "title": "10. Приклад цільового вигляду"
+      }
+    ],
+    "must_lines": [],
+    "char_count": 9177
+  },
+  "ext/pkg/root/README.md": {
+    "path": "ext/pkg/root/README.md",
+    "title": "ZINGO — Chatroulette Propaganda Bingo",
+    "status": "",
+    "layer": "process",
+    "source_class": "package_docs",
+    "source_role": "root_readme",
+    "package_scope": "root",
+    "authored": "human",
+    "canonicality": 0.7,
+    "workspace_rel": "README.md",
+    "canonical_path": "README.md",
+    "first_paragraph": "Міні проєкт для фана. Браузерний плагін, який перетворює чат-рулетки на бінго з російською пропагандою та мемами.",
+    "toc": [
+      {
+        "level": 1,
+        "title": "ZINGO — Chatroulette Propaganda Bingo"
+      },
+      {
+        "level": 2,
+        "title": "Документація"
+      },
+      {
+        "level": 2,
+        "title": "Стек"
+      },
+      {
+        "level": 2,
+        "title": "Статус"
+      },
+      {
+        "level": 2,
+        "title": "Ліцензія"
+      }
+    ],
+    "must_lines": [],
+    "char_count": 624
+  },
+  "ext/config/project-mcp-pin.md": {
+    "path": "ext/config/project-mcp-pin.md",
+    "title": "Config truth — project_mcp_pin",
+    "status": "",
+    "layer": "process",
+    "source_class": "config_truth",
+    "source_role": "project_mcp_pin",
+    "package_scope": null,
+    "authored": "human",
+    "canonicality": 0.9,
+    "workspace_rel": ".cursor/mcp.json",
+    "canonical_path": ".cursor/mcp.json",
+    "first_paragraph": "workspace_rel: `.cursor/mcp.json` source_class: `config_truth` source_role: `project_mcp_pin`",
+    "toc": [
+      {
+        "level": 1,
+        "title": "Config truth — project_mcp_pin"
+      },
+      {
+        "level": 2,
+        "title": "Doc Hub pin notes"
+      }
+    ],
+    "must_lines": [],
+    "char_count": 980
+  }
+}

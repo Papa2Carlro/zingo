@@ -1,0 +1,30 @@
+{
+  "0007-view-scoped-zustand-hybrid.md": [],
+  "ANALYTICS.md": [],
+  "API.md": [],
+  "ARCHITECTURE.md": [],
+  "BACKEND.md": [],
+  "DEVELOPER_GUIDE.md": [],
+  "PHRASES.md": [],
+  "README.md": [
+    "SPEC.md",
+    "ARCHITECTURE.md",
+    "TECH.md",
+    "BACKEND.md",
+    "API.md",
+    "SECURITY.md",
+    "PHRASES.md",
+    "ROADMAP.md",
+    "ANALYTICS.md",
+    "DEVELOPER_GUIDE.md",
+    "frontend-code-style.md"
+  ],
+  "ROADMAP.md": [],
+  "SECURITY.md": [],
+  "SPEC.md": [],
+  "TECH.md": [],
+  "UI.md": [],
+  "frontend-code-style.md": [],
+  "ext/pkg/root/README.md": [],
+  "ext/config/project-mcp-pin.md": []
+}
